@@ -10,7 +10,7 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `${process.env.NODE === 'local' ? 'src' : 'dist'}/shared/config/.${process.env.NODE}.env`,
+      envFilePath: `.${process.env.NODE}.env`,
       isGlobal: true,
     }),
     TerminusModule,
