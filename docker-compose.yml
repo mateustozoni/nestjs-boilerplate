@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:11
+    container_name: socialcommerce-database
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=socialcommerce-database
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+
+volumes:
+  postgres_data: {}
