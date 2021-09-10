@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HealthcheckController } from 'src/healthcheck/healthcheck.controller';
@@ -8,18 +9,22 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: `src/shared/config/.${process.env.NODE}.env`,
+    }),
     TerminusModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'admin',
-      password: '123456',
-      database: 'socialcommerce-database',
+      username: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+      schema: process.env.DB_SCHEMA,
       entities: [
         __dirname + '/../**/*.entity{.ts,.js}',
       ],
-      synchronize: true, // SHOULD NOT BE USED IN PROD AND STAGING
+      synchronize: process.env.NODE === 'local' ? true : false, // SHOULD NOT BE USED IN PROD AND STAGING
     }),
     UsersModule
   ],

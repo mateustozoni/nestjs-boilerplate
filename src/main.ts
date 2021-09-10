@@ -1,10 +1,13 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as dotenv from "dotenv";
 import { AppModule } from './shared/app.module';
 import { HttpExceptionFilter } from './shared/filters/HttpExceptionFilter';
 
 async function bootstrap() {
+  dotenv.config();
+
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalFilters(new HttpExceptionFilter());
